@@ -1,2 +1,2 @@
 # PyTwitchChat
-Python library to interact with the chat of a Twitch channel
+Python package to interact with the chat of a Twitch channel
