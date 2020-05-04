@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pytwitchchat",
-    version="1.0.0",
+    version="0.1.0",
     author="Benjamin Janssens",
     author_email="benji.janssens@gmail.com",
     description="Python package to interact with the chat of a Twitch channel",
