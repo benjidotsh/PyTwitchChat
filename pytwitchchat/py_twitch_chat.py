@@ -28,7 +28,7 @@ class TwitchChatClient:
 
     def __is_mod(self, line):
         badges = line
-        badges = tags.split(";", -1)
+        badges = tags.split(";", -1)[1]
         if "broadcaster" in badges:
             return True
         if "subscriber" in badges:
