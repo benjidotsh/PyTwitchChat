@@ -1,4 +1,5 @@
 import socket
+import time
 
 
 class TwitchChatClient:
@@ -26,13 +27,20 @@ class TwitchChatClient:
         user = info.split("!", 1)[0]
         return user
 
+    def __is_sub(self, line):
+        badges = line
+        badges = badges.split(";", -1)[1]
+        if "subscriber" in badges:
+            return True
+        else:
+            return False
+
+
     def __is_mod(self, line):
         badges = line
-        badges = tags.split(";", -1)[1]
+        badges = badges.split(";", -1)[1]
         if "broadcaster" in badges:
             return True
-        if "subscriber" in badges:
-            self.is_sub = True
         if "mod" in badges:
             return True
         else:
@@ -59,7 +67,7 @@ class TwitchChatClient:
             for line in readbuffer_join.split("\n")[0:-1]:
                 if ("End of /NAMES list" in line):
                     connecting = False
-                    print("Connected!")
+                    print("\nConnected!\n" + str(time.time()) + "\n")
 
     def run(self):
         while True:
@@ -72,7 +80,7 @@ class TwitchChatClient:
                     message = self.__get_message(line)
                     user = self.__get_user(line)
                     is_mod = self.__is_mod(line)
-                    if_sub = false
+                    is_sub = self.__is_sub(line)
                     if self.__HANDLE_METHOD:
                         self.__HANDLE_METHOD(message, user, is_mod, is_sub)
                 elif "PING" in line:
