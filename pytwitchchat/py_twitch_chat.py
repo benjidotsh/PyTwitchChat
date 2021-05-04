@@ -27,8 +27,20 @@ class TwitchChatClient:
         return user
 
     def __is_mod(self, line):
-        tags = line.split(":", 2)[0]
-        return True if "user-type=mod" in tags else False
+        tags = line
+        tags = tags.split(";", -1)[1]
+        if "broadcaster" in line:
+            print("is broadcaster")
+            return True
+        if "subscriber" in tags:
+            self.is_sub = True
+            print("sub")
+        if "mod" in tags:
+            print("mod")
+            return True
+        else:
+            print("not mod")
+            return False
 
     def send_message(self, message):
         messageTemp = "PRIVMSG #" + self.__CHANNEL + " :" + message
@@ -65,7 +77,7 @@ class TwitchChatClient:
                     user = self.__get_user(line)
                     is_mod = self.__is_mod(line)
                     if self.__HANDLE_METHOD:
-                        self.__HANDLE_METHOD(message, user, is_mod)
+                        self.__HANDLE_METHOD(message, user, is_mod, is_sub)
                 elif "PING" in line:
                     message = "PONG tmi.twitch.tv\r\n".encode()
                     self.__IRC.send(message)
