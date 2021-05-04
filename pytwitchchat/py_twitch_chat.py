@@ -27,8 +27,16 @@ class TwitchChatClient:
         return user
 
     def __is_mod(self, line):
-        tags = line.split(":", 2)[0]
-        return True if "user-type=mod" in tags else False
+        badges = line
+        badges = tags.split(";", -1)
+        if "broadcaster" in badges:
+            return True
+        if "subscriber" in badges:
+            self.is_sub = True
+        if "mod" in badges:
+            return True
+        else:
+            return False
 
     def send_message(self, message):
         messageTemp = "PRIVMSG #" + self.__CHANNEL + " :" + message
