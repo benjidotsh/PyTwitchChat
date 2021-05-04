@@ -73,7 +73,7 @@ class TwitchChatClient:
                     user = self.__get_user(line)
                     is_mod = self.__is_mod(line)
                     if self.__HANDLE_METHOD:
-                        self.__HANDLE_METHOD(message, user, is_mod)
+                        self.__HANDLE_METHOD(message, user, is_mod, is_sub)
                 elif "PING" in line:
                     message = "PONG tmi.twitch.tv\r\n".encode()
                     self.__IRC.send(message)
